@@ -24,7 +24,10 @@ function save(req, res) {
       });
     });
 }
+// get all posts
+function getAllPosts() {}
 // to use the methid
 module.exports = {
   save: save,
+  //   getAllPosts: getAllPosts,
 };
