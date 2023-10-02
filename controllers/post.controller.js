@@ -72,11 +72,26 @@ function updateRecord(req, res) {
       });
     });
 }
+// delete a record
+function deletePost(req, res) {
+  const postId = req.params.id;
+  const userId = 1;
+  Post.destroy({ where: { id: postId, userId: userId } })
+    .then((response) => {
+      res
+        .status(200)
+        .json({ message: "Post was delete Successfully", post: response });
+    })
+    .catch((err) => {
+      res.status(500).json({ message: err.message });
+    });
+}
 // to use the methid
 module.exports = {
   save: save,
   show: show,
   getAllPosts: getAllPosts,
   updateRecord: updateRecord,
+  deletePost: deletePost,
   //   getAllPosts: getAllPosts,
 };
