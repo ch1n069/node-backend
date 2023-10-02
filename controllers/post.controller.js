@@ -93,7 +93,7 @@ function updateRecord(req, res) {
     title: { type: "string", optional: "false", max: "100" },
     content: { type: "string", optional: "false", max: "500" },
     imageUrl: { type: "string", optional: "false" },
-    categoryId: { type: "string", optional: "false" },
+    categoryId: { type: "number", optional: "false" },
   };
   const validationResponse = v.validate(updatePost, schema);
   // performing to check if the valdation passed or not
