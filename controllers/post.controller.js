@@ -50,28 +50,26 @@ function getAllPosts(req, res) {
 }
 // update a record from the database
 function updateRecord(req, res) {
-  const postId = req.params.postId;
+  const id = req.params.id;
   const userId = 1;
 
-  const updateRecord = {
+  const updatePost = {
     title: req.body.title,
     content: req.body.content,
     imageUrl: req.body.imageUrl,
     categoryId: req.body.categoryId,
   };
-  Post.update(updateRecord, { where: { id: postId, userId: userId } })
+  Post.update(updatePost, { where: { id: id, userId: userId } })
     .then((response) => {
       res
         .status(200)
         .json({ message: "Record updated successfully", post: response });
     })
     .catch((err) => {
-      res
-        .status(500)
-        .json({
-          message: "something happening when updating the post",
-          err: err,
-        });
+      res.status(500).json({
+        message: "something happening when updating the post",
+        err: err,
+      });
     });
 }
 // to use the methid
@@ -79,5 +77,6 @@ module.exports = {
   save: save,
   show: show,
   getAllPosts: getAllPosts,
+  updateRecord: updateRecord,
   //   getAllPosts: getAllPosts,
 };
