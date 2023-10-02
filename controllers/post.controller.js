@@ -48,6 +48,32 @@ function getAllPosts(req, res) {
       res.status(500).json({ message: "Something went wrong" });
     });
 }
+// update a record from the database
+function updateRecord(req, res) {
+  const postId = req.params.postId;
+  const userId = 1;
+
+  const updateRecord = {
+    title: req.body.title,
+    content: req.body.content,
+    imageUrl: req.body.imageUrl,
+    categoryId: req.body.categoryId,
+  };
+  Post.update(updateRecord, { where: { id: postId, userId: userId } })
+    .then((response) => {
+      res
+        .status(200)
+        .json({ message: "Record updated successfully", post: response });
+    })
+    .catch((err) => {
+      res
+        .status(500)
+        .json({
+          message: "something happening when updating the post",
+          err: err,
+        });
+    });
+}
 // to use the methid
 module.exports = {
   save: save,
