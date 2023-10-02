@@ -29,7 +29,13 @@ function show(req, res) {
   const id = req.params.id;
   Post.findByPk(id)
     .then((response) => {
-      res.status(200).json(response);
+      if (response) {
+        res.status(200).json(response);
+      } else {
+        res.status(404).json({
+          message: "Theres is no post that exists using the record ",
+        });
+      }
     })
     .catch((err) => {
       res.status(500).json({
