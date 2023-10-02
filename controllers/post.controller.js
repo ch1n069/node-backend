@@ -85,6 +85,23 @@ function updateRecord(req, res) {
     imageUrl: req.body.imageUrl,
     categoryId: req.body.categoryId,
   };
+
+  // create an instance of the validator
+  const v = new validator();
+  // define a schema for our update method
+  const schema = {
+    title: { type: "string", optional: "false", max: "100" },
+    content: { type: "string", optional: "false", max: "500" },
+    imageUrl: { type: "string", optional: "false" },
+    categoryId: { type: "string", optional: "false" },
+  };
+  const validationResponse = v.validate(updatePost, schema);
+  // performing to check if the valdation passed or not
+  if (validationResponse !== true) {
+    return res
+      .status(400)
+      .json({ message: "Validation failed", error: validationResponse });
+  }
   Post.update(updatePost, { where: { id: id, userId: userId } })
     .then((response) => {
       res
