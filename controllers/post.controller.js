@@ -1,6 +1,9 @@
 // import all the models
 const models = require("../models");
+// import of the validation package
+const validator = require("fastest-validator");
 const Post = models.Post;
+
 // method to insert a posts into the
 function save(req, res) {
   const post = {
@@ -10,6 +13,23 @@ function save(req, res) {
     categoryId: req.body.categoryId,
     userId: 1,
   };
+
+  // create validation schema to validate the data before setting it to the database
+  const schema = {
+    title: { type: "string", optional: "false", max: "100" },
+    content: { type: "string", optional: "false", max: "500" },
+    imageUrl: { type: "string", optional: "false" },
+    categoryId: { type: "number", optional: "false" },
+  };
+  const v = new validator();
+  const validationResponse = v.validate(post, schema);
+  // perform a check to check if the validation passes the schema
+  //it will always return true or an array of error messages
+  if (validationResponse !== true) {
+    return res
+      .status(400)
+      .json({ message: "Validation failed", error: validationResponse });
+  }
   Post.create(post)
     .then((result) => {
       res.status(201).json({
