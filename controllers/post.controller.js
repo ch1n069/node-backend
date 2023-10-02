@@ -24,10 +24,34 @@ function save(req, res) {
       });
     });
 }
+function show(req, res) {
+  // get the id of the post
+  const id = req.params.id;
+  Post.findByPk(id)
+    .then((response) => {
+      res.status(200).json(response);
+    })
+    .catch((err) => {
+      res.status(500).json({
+        message: "Something went wrong",
+      });
+    });
+}
 // get all posts
-function getAllPosts() {}
+function getAllPosts(req, res) {
+  // method from sequelize
+  Post.findAll()
+    .then((response) => {
+      res.status(200).json(response);
+    })
+    .catch((err) => {
+      res.status(500).json({ message: "Something went wrong" });
+    });
+}
 // to use the methid
 module.exports = {
   save: save,
+  show: show,
+  getAllPosts: getAllPosts,
   //   getAllPosts: getAllPosts,
 };
