@@ -10,9 +10,10 @@ module.exports = (sequelize, DataTypes) => {
     static associate(models) {
       // define association here
       // creating the association between the post and comments
-      Post.hasMany(models.Comments, {
+      Post.hasMany(sequelize.define("Comment"), {
         onDelete: "cascade",
       });
+      // Post.belongsTo();
     }
   }
   Post.init(
